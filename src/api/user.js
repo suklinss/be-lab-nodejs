@@ -17,8 +17,13 @@ const save = {
   // options:{},
   handler: async (req, res) => {
     try {
-      var query = new user(req.payload)
-      res = await query.save();
+      res1 = await user.find({username:req.payload.username}).exec()
+      console.log(res1);
+      if(res1.length == 0){
+        console.log("TEST")
+        var query = new user(req.payload)
+        res = await query.save()
+      }
       return res
     } catch (err) {
       console.error(err)

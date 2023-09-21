@@ -17,8 +17,8 @@ const server = Hapi.server({
 });
 router.forEach((path) => server.route(path));
 
-// var uri = "mongodb+srv://admin:mqKxyut9qbLYHKcy@cluster0.uynyu2g.mongodb.net/mongodb"
-var uri = "mongodb://localhost:27017/templateproject";
+var uri = "mongodb+srv://admin:OHsAgROIOW6zMo8G@cluster0.uynyu2g.mongodb.net/templateproject"
+// var uri = "mongodb://localhost:27017/templateproject";
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 const connection = mongoose.connection;
 connection.once("open", function () {
