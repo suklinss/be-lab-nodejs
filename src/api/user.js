@@ -1,11 +1,11 @@
 const user = require("../model/user")
+const hashData = require("../function/Encryption")
 
-const findOne = {
+const find = {
   handler: async (req, res) => {
     try {
-      res = await user.find(req.payload).exec();
-      console.log(res);
-      return res;
+      res = await user.find(req.payload).exec()
+      return res
     } catch (err) {
       console.error(err)
       throw err
@@ -18,9 +18,7 @@ const save = {
   handler: async (req, res) => {
     try {
       res1 = await user.find({username:req.payload.username}).exec()
-      console.log(res1);
       if(res1.length == 0){
-        console.log("TEST")
         var query = new user(req.payload)
         res = await query.save()
       }
@@ -37,8 +35,8 @@ const findByIdAndUpdate = {
   handler: async (req, res) => {
     try {
       var { id } = req.params
-      var { username,password} = req.payload
-      res = await user.findByIdAndUpdate(id,{username,password})
+      var { username,password } = req.payload
+      res = await user.findByIdAndUpdate(id,{username,password,updatedAt: new Date()})
       return res
     } catch (err) {
       console.error(err)
@@ -61,10 +59,31 @@ const findByIdAndDelete = {
   }
 }
 
+const hashDatas = {
+  // options:{},
+  handler: async (req, res) => {
+    try {
+      var { data, salt } = req.payload
+      if(salt){
+        res = await hashData.sha512(data,salt)
+      }else{
+        res = await hashData.saltHashData(data)
+      }
+      console.log(req.payload)
+      console.log(res)
+      return res
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+}
+
 module.exports = {
-  findOne,
+  find,
   save,
   findByIdAndUpdate,
-  findByIdAndDelete
+  findByIdAndDelete,
+  hashDatas,
 }
 

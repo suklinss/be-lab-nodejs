@@ -4,7 +4,7 @@ const router = [
     {
       method: "POST",
       path: "/user",
-      config: Api.user.findOne,
+      config: Api.user.find
     },
     {
       method: "POST",
@@ -20,7 +20,12 @@ const router = [
       method: "DELETE",
       path: "/user/{id}",
       config: Api.user.findByIdAndDelete,
-    }
+    },
+    {
+      method: "POST",
+      path: "/user/hash",
+      config: Api.user.hashDatas
+    },
   ];
   
   module.exports = router;
